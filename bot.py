@@ -2,7 +2,8 @@
 
 import os
 import logging
-from telebot import TeleBot, types
+from telebot import TeleBot
+from telebot.types import Update
 from dotenv import load_dotenv
 from flask import Flask, request
 
@@ -59,16 +60,16 @@ def start_message(message):
 # Flask-приложение для обработки запросов Telegram
 app = Flask(__name__)
 
+
 @app.route('/webhook', methods=['POST'])
 def webhook():
     try:
         json_data = request.get_json()
         if json_data:
-            bot.process_new_updates([TeleBot.types.Update.de_json(json_data)])
+            bot.process_new_updates([Update.de_json(json_data)])
     except Exception as e:
         logger.error(f"Ошибка обработки Webhook: {e}")
     return 'OK', 200
-
 
 
 # Хендлер для кнопки "О нас"
