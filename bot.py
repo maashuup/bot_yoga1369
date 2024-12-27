@@ -2,7 +2,7 @@
 
 import os
 import logging
-from telebot import TeleBot
+from telebot import TeleBot, types
 from telebot.types import Update
 from dotenv import load_dotenv
 from flask import Flask, request
