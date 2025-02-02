@@ -92,6 +92,14 @@ def about_us(message):
         "буду рада видеть вас в моём закрытом телеграмм канале 13• YOGA •69",
     )
 
+    # Отправка фото из папки media/
+    photo_path = "media/about_me.png"
+    try:
+        with open(photo_path, "rb") as photo:
+            bot.send_photo(chat_id, photo)
+    except FileNotFoundError:
+        bot.send_message(chat_id, "Ошибка: фото не найдено.")
+
 
 # Хендлер для кнопки "пробная практика"
 @bot.message_handler(func=lambda message: message.text == "🧘🏼‍♀️ пробная практика")
