@@ -78,6 +78,12 @@ def webhook():
 @bot.message_handler(func=lambda message: message.text == "✨ обо мне")
 def about_us(message):
     chat_id = message.chat.id
+
+    # Создание инлайн-кнопки, которая вызывает кнопку "покупка подписки"
+    inline_keyboard = types.InlineKeyboardMarkup()
+    button = types.InlineKeyboardButton("🎟 13·YOGA·69", callback_data="buy_subscription")
+    inline_keyboard.add(button)
+
     bot.send_message(
         chat_id,
         "Привет, я Таня, тренер по йоге в стиле fysm. Физическая активность в моей жизни отсутствовала до 30 лет.\n"
@@ -89,32 +95,26 @@ def about_us(message):
         "- нормализовать эмоциональное состояние\n"
         "- обрести силу, гибкость, выносливость,\n"
         "буду рада видеть вас в моём закрытом Telegram-канале!\n\n"
-        "буду рада видеть вас в моём закрытом телеграмм канале 13• YOGA •69",
+        "Нажмите на кнопку ниже, чтобы узнать подробнее ⬇️",
+        reply_markup=inline_keyboard
     )
 
-    # Отправка фото из папки media/
-    photo_path = "media/about_me.PNG"
-    try:
-        with open(photo_path, "rb") as photo:
-            bot.send_photo(chat_id, photo)
-    except FileNotFoundError:
-        bot.send_message(chat_id, "Ошибка: фото не найдено.")
-
-
-# Хендлер для кнопки "пробная практика"
-@bot.message_handler(func=lambda message: message.text == "🧘🏼‍♀️ пробная практика")
-def marathon(message):
-    chat_id = message.chat.id
-    bot.send_message(
-        chat_id,
-        "https://t.me/yoga13_69",
-    )
+# **Обработчик инлайн-кнопки**
+@bot.callback_query_handler(func=lambda call: call.data == "buy_subscription")
+def show_subscription(call):
+    chat_id = call.message.chat.id
+    send_subscription_info(chat_id)
 
 
 # Хендлер для кнопки "покупка подписки"
 @bot.message_handler(func=lambda message: message.text == "🎟 13·YOGA·69")
 def reviews(message):
     chat_id = message.chat.id
+    send_subscription_info(chat_id)
+
+
+# Функция для отправки информации о подписке
+def send_subscription_info(chat_id):
     bot.send_message(
         chat_id,
         "На канале безопасные практики, которые помогут вам за короткое время приобрести мышечный корсет, "
@@ -137,7 +137,16 @@ def reviews(message):
         "- научиться ровно и правильно дышать\n"
         "- наладить режим дня, сон\n"
         "- научиться отслеживать и контролировать свои неосознанные паттерны поведения\n\n"
-        "ССЫЛКА НА ОПЛАТУ"
+        "📌 **ССЫЛКА НА ОПЛАТУ**"
+    )
+
+# Хендлер для кнопки "пробная практика"
+@bot.message_handler(func=lambda message: message.text == "🧘🏼‍♀️ пробная практика")
+def marathon(message):
+    chat_id = message.chat.id
+    bot.send_message(
+        chat_id,
+        "https://t.me/yoga13_69",
     )
 
 
