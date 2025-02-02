@@ -40,24 +40,18 @@ def start_message(message):
             types.KeyboardButton("✨ обо мне"),
             types.KeyboardButton("🧘🏼‍♀️ пробная практика")
         )
-        keyboard.add(types.KeyboardButton("🎟 13·YOGA·69"))
+        keyboard.add(types.KeyboardButton("🎟 13·YOGA·69 подписка"))
         keyboard.add(
             types.KeyboardButton("👯‍♀️ мероприятия"),
             types.KeyboardButton("🫂 поддержка"))
 
-        # Inline-клавиатура с кликабельным текстом
-        inline_keyboard = types.InlineKeyboardMarkup()
-        inline_keyboard.add(
-            types.InlineKeyboardButton("🎟 13·YOGA·69", callback_data="buy_subscription")
-        )
-
-        # Отправка сообщения с кликабельным текстом
+        # Отправка сообщения
         bot.send_message(
             chat_id,
             f"Приветствую, {name}!\n\n"
             "Здесь вы можете попробовать 2 практики со мной,\n"
             "после чего оформить подписку на закрытый телеграмм канал\n",
-            reply_markup=inline_keyboard,  # Добавление inline-кнопки
+            reply_markup=keyboard,  # Добавление обычной клавиатуры
         )
         logger.info(f"Сообщение успешно отправлено пользователю {chat_id}")
     except Exception as e:
@@ -86,7 +80,7 @@ def about_us(message):
 
     # Создание инлайн-кнопки, которая вызывает кнопку "покупка подписки"
     inline_keyboard = types.InlineKeyboardMarkup()
-    button = types.InlineKeyboardButton("🎟 13·YOGA·69", callback_data="buy_subscription")
+    button = types.InlineKeyboardButton("🎟 13·YOGA·69 подписка", callback_data="buy_subscription")
     inline_keyboard.add(button)
 
     bot.send_message(
@@ -112,7 +106,7 @@ def show_subscription(call):
 
 
 # Хендлер для кнопки "покупка подписки"
-@bot.message_handler(func=lambda message: message.text == "🎟 13·YOGA·69")
+@bot.message_handler(func=lambda message: message.text == "🎟 13·YOGA·69 подписка")
 def reviews(message):
     chat_id = message.chat.id
     send_subscription_info(chat_id)
