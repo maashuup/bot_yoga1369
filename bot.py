@@ -93,7 +93,7 @@ def about_us(message):
     )
 
     # Отправка фото из папки media/
-    photo_path = "media/about_me.png"
+    photo_path = "media/about_me.PNG"
     try:
         with open(photo_path, "rb") as photo:
             bot.send_photo(chat_id, photo)
